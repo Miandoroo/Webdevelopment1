@@ -1,31 +1,46 @@
-# Gym Class Booking Platform
+Docker template for PHP projects
+This repository provides a starting template for PHP application development.
 
-This project is a scoped-down MVC assignment for Web Development 1. It focuses on class booking instead of a larger gym ecosystem so the implementation stays realistic and aligned with the rubric.
+It contains:
 
-## Scope
+NGINX webserver
+PHP FastCGI Process Manager with PDO MySQL support
+MariaDB (GPL MySQL fork)
+PHPMyAdmin
+Composer
+Composer package nikic/fast-route for routing
+Setup
+Install Docker Desktop on Windows or Mac, or Docker Engine on Linux.
+Clone the project
+Usage
+In a terminal, from the cloned project folder, run:
 
-- Anonymous visitors can view the homepage, class schedule and trainers
-- Registered users can register, log in, book classes, cancel bookings and save account preferences
-- Admin users can manage classes, trainers and users
-- JSON endpoints support filtering and reservation actions through `fetch()`
+docker compose up
+Composer Autoload
+This template is configured to use Composer for PSR-4 autoloading:
 
-## Architecture
+Namespace App\\ is mapped to app/src/.
+To install dependencies and generate the autoloader, run:
 
-Request -> Router -> Controller -> Service -> Repository -> Database -> View / JSON response
+docker compose run --rm php composer install
+If you add new classes or change namespaces, regenerate the autoloader:
 
-## Assignment alignment
+docker compose run --rm php composer dump-autoload
+Example usage is wired in app/public/index.php and a sample class exists at app/src/hello.php.
 
-- MVC structure with thin controllers
-- PDO repositories with prepared statements
-- Session-based authentication
-- Password hashing via `password_hash()` / `password_verify()`
-- Bootstrap responsive layout
-- JSON API endpoints
-- JavaScript with asynchronous updates using `fetch()`
+NGINX
+NGINX will now serve files in the app/public folder.
 
-## Setup
+Go to http://localhost/hello.php. You should see a hello world message.
 
-1. Run `composer dump-autoload`
-2. Create a database and import `app/src/Database/seed.sql`
-3. Update database credentials in `app/src/Config/database.php`
-4. Point your local web server to `app/public`
+PHPMyAdmin
+PHPMyAdmin provides basic database administration. It is accessible at localhost:8080.
+
+Credentials are defined in docker-compose.yml. They are: developer/secret123
+
+Stopping the docker container
+If you want to stop the containers, press Ctrl+C.
+
+Or run:
+
+docker compose down
